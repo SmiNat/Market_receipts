@@ -1,4 +1,4 @@
-"""A Python script for extracting and processing data from .csv invoice file
+"""A Python script for extracting and processing data from .csv receipt file
 and returning outcome in Excel file.
 A script will work on csv files with data included:
     - BON_DAT,
@@ -22,8 +22,8 @@ pd.set_option("display.width", desired_width)
 pd.set_option("display.max_columns", 15)
 
 
-class Invoices:
-    """Convert csv file with invoice data into dataframe and extract daily data
+class Receipts:
+    """Convert csv file with receipt data into dataframe and extract daily data
     in dataframe or excel file."""
 
     REQUIRED_FILE_HEADERS = [
@@ -59,7 +59,7 @@ class Invoices:
         self.file_path = file_path
 
     def __str__(self) -> str:
-        return f"Invoices for the file: '{os.path.basename(self.file_path)}'"
+        return f"Receipts for the file: '{os.path.basename(self.file_path)}'"
 
     def check_file_structure(self) -> None:
         """Validates if csv file has all required data."""
@@ -81,8 +81,8 @@ class Invoices:
         df.sort_values(by="BON_DAT", inplace=True)
         return df
 
-    def generate_invoice_report(self) -> DataFrame:
-        """Generates full invoice report with data grouped by date."""
+    def generate_receipt_report(self) -> DataFrame:
+        """Generates full receipt report with data grouped by date."""
         # Creating a desired DataFrame
         df = self.original_dataframe().copy()
         # Converting BON_DAT to datetime
@@ -132,13 +132,13 @@ class Invoices:
         report = pd.DataFrame(data)
         return report
 
-    def generate_invoice_report_short(self):
+    def generate_receipt_report_short(self):
         """Generates short report from original DataFrame data."""
-        report = self.generate_invoice_report()
+        report = self.generate_receipt_report()
         final_report = report[self.FINAL_REPORT_HEADERS].copy()
         return final_report
 
-    def convert_invoice_report_to_excel(
+    def convert_receipt_report_to_excel(
         self,
         excel_path: str,
         full_report: bool = False,
@@ -154,8 +154,8 @@ class Invoices:
 
             # Write report to the second sheet
             report = (
-                self.generate_invoice_report_short()
+                self.generate_receipt_report_short()
                 if not full_report
-                else self.generate_invoice_report()
+                else self.generate_receipt_report()
             )
             report.to_excel(writer, sheet_name="Final_Report", index=False)

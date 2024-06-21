@@ -1,6 +1,6 @@
 from openpyxl.styles import Side, numbers
 
-# Basic invoice sheet style
+# Basic receipt sheet style
 RECEIPT_HEADER_FONT = {"bold": True}
 RECEIPT_DICT_HEADER_ALIGNMENT_DICT = {"horizontal": "left"}
 RECEIPT_REPORT_HEADER_ALIGNMENT = {"horizontal": "center"}
