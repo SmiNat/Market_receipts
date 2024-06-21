@@ -2,39 +2,39 @@ import os
 
 from receipts import excel_style
 from receipts.excel_formatter import ExcelFormatter
-from receipts.receipts import Invoices
+from receipts.receipts import Receipts
 
-invoice_file_path = (
+receipt_file_path = (
     "receipts/receipts_data/example.csv"  # change desired data file path
 )
-invoice_excel_path = (
+receipt_excel_path = (
     "receipts/receipts_data/2024_04.xlsx"  # change excel filename or directory
 )
 
-invoice_data = Invoices(invoice_file_path)
-excel_file = invoice_data.convert_invoice_report_to_excel(invoice_excel_path)
+receipt_data = Receipts(receipt_file_path)
+excel_file = receipt_data.convert_receipt_report_to_excel(receipt_excel_path)
 
 
 # Comment to run the file (from main diretory): python -m receipts.main
 
 # Basic data
-print("\nGiven csv data: \n", invoice_data.original_dataframe().head(), "\n")
-# print(invoice_data.original_dataframe().info())
+print("\nGiven csv data: \n", receipt_data.original_dataframe().head(), "\n")
+# print(receipt_data.original_dataframe().info())
 
 # Full daily statistics
 print(
     "\nFull daily statistics from selected file: \n",
-    invoice_data.generate_invoice_report().head(),
+    receipt_data.generate_receipt_report().head(),
 )
 
 # Selected daily statistics
 print(
     "\nSelected daily statistics from selected file: \n",
-    invoice_data.generate_invoice_report_short().head(),
+    receipt_data.generate_receipt_report_short().head(),
 )
 
 # Excel file
-if os.path.exists(invoice_excel_path):
+if os.path.exists(receipt_excel_path):
     print("\nExcel file created in given directory.")
 else:
     print(
@@ -44,7 +44,7 @@ else:
 
 # Changing excel formatting (can be skipped or comment)
 
-excel_file = ExcelFormatter(invoice_excel_path)
+excel_file = ExcelFormatter(receipt_excel_path)
 
 # Changing columns width
 excel_file.column_width_adjustment("Dictionary")
